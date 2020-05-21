@@ -44,6 +44,6 @@ GITHUB, GITLAB CSUI
 
 ## Author
 - Aji Wuryanto - 1606894452
-- Mohammad Aulia Hafidh - 
+- Mohammad Aulia Hafidh - 1606888481
 
 ## PROJECT Mata Kuliah Enterprise Aplication Integration
