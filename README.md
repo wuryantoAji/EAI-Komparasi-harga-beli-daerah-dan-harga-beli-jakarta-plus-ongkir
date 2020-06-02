@@ -38,8 +38,8 @@ GITHUB, GITLAB CSUI
 
 ### To Do
 
-1. halaman front end untuk interaksi pengguna
-2. fungsi untuk mendapatkan informasi dari API
+1. halaman front end untuk interaksi pengguna (aul)
+2. fungsi untuk mendapatkan informasi dari API  (aji)
 3. Webscrapping
 
 ## Author
