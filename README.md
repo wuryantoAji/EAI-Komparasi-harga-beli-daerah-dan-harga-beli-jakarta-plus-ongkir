@@ -13,7 +13,7 @@ python3 -m venv env
 
 #### Jangan lupa untuk menjalankan 
 ```
-set FLASK_APP=tugas.py
+set FLASK_APP=harga.py
 set FLASK_ENV=development
 ```
 

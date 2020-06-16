@@ -1,0 +1,58 @@
+from flask import Flask
+from flask import request, request, render_template, jsonify
+from provinsiKota import *
+import json
+import requests
+
+valid_kota = id_kota_atau_kabupaten
+url = 'https://api.rajaongkir.com/starter/cost'
+headers = {"key":"1c5a64693add038257cc24dda894dc77"}
+
+app = Flask(__name__)
+app.config["DEBUG"] = True
+
+@app.route("/index", methods=["GET","POST"])
+def index():
+    list_pangan = ["beras","daging ayam","daging sapi","telur","bawang merah", "bawang putih", "cabai merah", "cabai rawit", "minyak goreng", "gula pasir"]
+    list_jasa = []
+    harga_jakarta = 0
+    harga_daerah = 0
+    kota_tujuan = ""
+    pangan_pilihan = ""
+    if request.method == 'POST':
+        pangan_pilihan = request.form['pangan_pilihan']
+        provinsi_pilihan = request.form['provinsi_pilihan']
+        berat_pangan = request.form['berat_pangan']
+        for i in valid_kota:
+            if int(i["city_id"]) == int(provinsi_pilihan):
+                kota_tujuan = i["province"]
+                
+        #cek input masuk atau tidak
+        print(pangan_pilihan + " " + provinsi_pilihan + berat_pangan)
+        #request API
+        payload = {
+            "origin" : "152",
+            "destination" : provinsi_pilihan,
+            "weight" : berat_pangan,
+            "courier" : "jne",
+        }
+        r = requests.post(url, payload, headers=headers)
+        #cek request berhasil atau tidak
+        response = r.json()
+        jenis_jasa = response["rajaongkir"]["results"][0]['costs']
+        for i in jenis_jasa:
+            list_jasa.append({ "nama_jenis" : i["service"] , "harga" : i["cost"][0]["value"] })
+        print(list_jasa)
+
+        #scrap website hargapangan lalu update harga_jakarta dan harga_daerah
+        
+
+
+
+        
+    
+    list_param = [valid_kota,list_pangan,list_jasa,pangan_pilihan,harga_daerah,harga_jakarta,kota_tujuan]
+    return render_template('index.html', list_param = list_param)
+
+
+app.run()

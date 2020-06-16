@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+ <!-- tunjukkin  daftar kota target dalam bentuk drop down,
+ daftar pangan yang mau dibeli(beras,ayam,sapi,telur,bawang merah, bawang putih, cabai merah, cabai rawit, minyak goreng, gula pasir), 
+ form buat nulis weight, -->
+<body>
+
+<form action="" method="post">
+    <label for="kota_tujuan">Provinsi Tujuan</label>
+    <select class="form-control" name = "provinsi_pilihan">
+      {% for provinsi in list_param[0] %}
+        <option value=" {{ provinsi["city_id"] }} ">{{ provinsi["province"] }}</option>
+      {% endfor %}
+    </select>
+    
+
+    <label for="jenis_pangan">Jenis Pangan</label>
+    <select class="form-control" name = "pangan_pilihan">
+        {% for list_pangan in list_param[1] %}
+            <option value= "{{list_pangan}}" SELECTED>{{list_pangan}}</option>"
+        {% endfor %}
+    </select>
+
+    <label for="berat_pangan">Berat Pangan (KG)</label>
+    <input type="number" name="berat_pangan" placeholder="berat_pangan" required>
+    
+
+    <input class="btn btn-default" type="submit" value="Cek Perbandingan Harga dengan Jakarta">
+
+</form>
+
+
+
+
+ <!-- tabel  -->
+<table id="myTable">
+    <thead>
+        <tr>
+            <th>Pangan</th>
+            <th>Jenis Jasa</th>
+            <th>Harga Pangan Daerah</th>
+            <th>Kota Tujuan</th>
+            <th>Ongkos Kirim</th>
+            <th>Total Harga</th>
+            <th>Harga Jakarta</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for jasa in list_param[2] %}
+        <tr>
+            <td>{{ list_param[3] }}</td>
+            <td>{{ jasa["nama_jenis"] }} </td>
+            <td>{{ list_param[4] }} </td>
+            <td>{{ list_param[6] }} </td>
+            <td>{{ jasa["harga"] }} </td>
+            <td>{{ list_param[4]+jasa["harga"] }} </td>
+            <td>{{ list_param[5] }} </td>
+        </tr>
+    {% endfor %} 
+    </tbody>
+</table>
+
+</body>
+
+</html>
