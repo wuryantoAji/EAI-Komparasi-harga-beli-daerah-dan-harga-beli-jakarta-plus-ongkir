@@ -1,8 +1,11 @@
 from flask import Flask
 from flask import request, request, render_template, jsonify
 from provinsiKota import *
+from tableDataText import *
 import json
 import requests
+from bs4 import BeautifulSoup
+from urllib.request import urlopen
 
 valid_kota = id_kota_atau_kabupaten
 url = 'https://api.rajaongkir.com/starter/cost'
@@ -45,8 +48,25 @@ def index():
         print(list_jasa)
 
         #scrap website hargapangan lalu update harga_jakarta dan harga_daerah
-        
 
+        html=urlopen("https://hargapangan.id/tabel-harga/pasar-tradisional/daerah")
+        bs=BeautifulSoup(html, features="html.parser")
+        daftar=bs.find("table",{"id": "report"})
+        panganDataTable = tableDataText(daftar)
+        list_pangan_numbered = {"beras": 'I',"daging ayam":'II',"daging sapi":'III',"telur":'IV',"bawang merah":'V', "bawang putih":'VI', "cabai merah":'VII', "cabai rawit":'VIII', "minyak goreng":'IX', "gula pasir":'X'}
+        nomorPangan =list_pangan_numbered.get(pangan_pilihan)
+        target = []
+
+        for cari in panganDataTable :
+            if cari[0] == nomorPangan :
+                target = cari
+        hargaTarget = int(target[2].replace(".",""))
+        harga_daerah = hargaTarget
+        harga_jakarta = hargaTarget
+
+        print(hargaTarget)
+
+        # print(panganDataTable)
 
 
         
